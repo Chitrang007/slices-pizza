@@ -5,9 +5,10 @@ import (
 	"fmt"
 	"net/http"
 	"slices-pizza/backend/models"
+	"slices-pizza/backend/services"
 )
 
-// CreateOrder handles incoming pizza orders from React
+// CreateOrder handles incoming pizza orders from React and saves to database
 func CreateOrder(w http.ResponseWriter, r *http.Request) {
 	// Only allow POST requests
 	if r.Method != "POST" {
@@ -58,6 +59,31 @@ func CreateOrder(w http.ResponseWriter, r *http.Request) {
 	}
 	fmt.Printf("\n💰 Total: %s\n", order.Total)
 	fmt.Printf("📅 Order Date: %s\n", order.Date)
+
+	// Save order to database
+	itemsJSON, _ := json.Marshal(order.Items)
+	dbID, err := services.SaveOrder(
+		order.ID,
+		order.Customer.FirstName,
+		order.Customer.LastName,
+		order.Customer.Email,
+		order.Customer.Phone,
+		order.Customer.Address,
+		order.Customer.City,
+		order.Customer.ZipCode,
+		string(itemsJSON),
+		order.Total,
+		order.Date,
+	)
+
+	if err != nil {
+		fmt.Printf("❌ Error saving order to database: %v\n", err)
+		fmt.Println("🔥 ═══════════════════════════════════════════\n")
+		http.Error(w, "Failed to save order", http.StatusInternalServerError)
+		return
+	}
+
+	fmt.Printf("💾 Saved to database with ID: %d\n", dbID)
 	fmt.Println("🔥 ═══════════════════════════════════════════\n")
 
 	// Set response header
