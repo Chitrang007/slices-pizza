@@ -1,5 +1,5 @@
 // API service for communicating with Go backend
-const API_BASE_URL = 'https://slices-pizza-backend.onrender.com';
+const API_BASE_URL = 'https://slices-pizza-backend.onrender.com/api';
 
 // Fetch all pizzas from backend
 export const fetchMenu = async () => {
