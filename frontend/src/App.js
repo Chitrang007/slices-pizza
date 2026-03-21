@@ -1,43 +1,36 @@
-import React, { useEffect, useState } from 'react';
-import './App.css';
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { CartProvider } from './context/CartContext';
+import Header from './components/Header';
+import Footer from './components/Footer';
+import Home from './pages/Home';
+import Menu from './pages/Menu';
+import Cart from './pages/Cart';
+import Checkout from './pages/Checkout';
+import OrderConfirmation from './pages/OrderConfirmation';
+import './styles/App.css';
+import './styles/components.css'
+import './styles/pages.css'
 
 function App() {
-  const [menu, setMenu] = useState([]);
-
-  useEffect(() => {
-    fetch('http://localhost:8080/api/menu')
-      .then(res => res.json())
-      .then(data => setMenu(data))
-      .catch(err => console.error("Connection Error:", err));
-  }, []);
-
   return (
-    <div className="App">
-      <nav className="navbar">
-        <h1 className="logo-text">
-          SLICES <span className="logo-accent">PIZZA</span>
-        </h1>
-        <p className="sub-header">BACKEND: GOLANG | FRONTEND: REACT</p>
-      </nav>
-      
-      <main className="menu-container">
-        <div className="pizza-grid">
-          {menu.map(pizza => (
-            <div key={pizza.id} className="pizza-card">
-              <span className="pizza-name">{pizza.name}</span>
-              <div className="card-footer">
-                <span className="pizza-price">
-                  ${pizza.price.toFixed(2)}
-                </span>
-                <button className="add-btn">
-                  Add to Cart
-                </button>
-              </div>
-            </div>
-          ))}
+    <CartProvider>
+      <Router>
+        <div className="app-container">
+          <Header />
+          <main className="main-content">
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/menu" element={<Menu />} />
+              <Route path="/cart" element={<Cart />} />
+              <Route path="/checkout" element={<Checkout />} />
+              <Route path="/order-confirmation" element={<OrderConfirmation />} />
+            </Routes>
+          </main>
+          <Footer />
         </div>
-      </main>
-    </div>
+      </Router>
+    </CartProvider>
   );
 }
 
