@@ -55,7 +55,7 @@ function Checkout() {
         items: cart,
         total: (parseFloat(getCartTotal()) * 1.1).toFixed(2),
         customer: formData,
-        date: new Date().toLocaleString(),
+        date: new Date().toISOString(),
       };
 
       // Send order to backend
