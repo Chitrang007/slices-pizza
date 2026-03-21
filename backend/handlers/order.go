@@ -15,27 +15,50 @@ func CreateOrder(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// Decode the incoming JSON from React into a Pizza struct
-	var orderedPizza models.Pizza
-	err := json.NewDecoder(r.Body).Decode(&orderedPizza)
+	// Decode the incoming JSON from React into an Order struct
+	var order models.Order
+	err := json.NewDecoder(r.Body).Decode(&order)
 	if err != nil {
+		fmt.Printf("❌ Error decoding order: %v\n", err)
 		http.Error(w, "Invalid order data", http.StatusBadRequest)
 		return
 	}
 
 	// Validate the order
-	if orderedPizza.Name == "" {
-		http.Error(w, "Pizza name is required", http.StatusBadRequest)
+	if order.Customer.FirstName == "" {
+		http.Error(w, "First name is required", http.StatusBadRequest)
 		return
 	}
 
-	if orderedPizza.Price <= 0 {
-		http.Error(w, "Price must be greater than 0", http.StatusBadRequest)
+	if order.Customer.Email == "" {
+		http.Error(w, "Email is required", http.StatusBadRequest)
 		return
 	}
 
-	// Log the order
-	fmt.Printf("🔥 NEW ORDER RECEIVED: %s ($%.2f)\n", orderedPizza.Name, orderedPizza.Price)
+	if len(order.Items) == 0 {
+		http.Error(w, "Order must contain at least one item", http.StatusBadRequest)
+		return
+	}
+
+	// Log the order to the terminal
+	fmt.Println("🔥 ═══════════════════════════════════════════")
+	fmt.Println("🔥 NEW ORDER RECEIVED!")
+	fmt.Println("🔥 ═══════════════════════════════════════════")
+	fmt.Printf("📋 Order ID: %s\n", order.ID)
+	fmt.Printf("👤 Customer: %s %s\n", order.Customer.FirstName, order.Customer.LastName)
+	fmt.Printf("📧 Email: %s\n", order.Customer.Email)
+	fmt.Printf("📞 Phone: %s\n", order.Customer.Phone)
+	fmt.Printf("📍 Address: %s, %s %s\n", order.Customer.Address, order.Customer.City, order.Customer.ZipCode)
+	fmt.Println("\n🍕 Items:")
+	for i, item := range order.Items {
+		fmt.Printf("   %d. %s - $%.2f\n", i+1, item.Name, item.Price)
+		if item.Toppings != "" {
+			fmt.Printf("      Toppings: %s\n", item.Toppings)
+		}
+	}
+	fmt.Printf("\n💰 Total: %s\n", order.Total)
+	fmt.Printf("📅 Order Date: %s\n", order.Date)
+	fmt.Println("🔥 ═══════════════════════════════════════════\n")
 
 	// Set response header
 	w.Header().Set("Content-Type", "application/json")
@@ -43,8 +66,8 @@ func CreateOrder(w http.ResponseWriter, r *http.Request) {
 
 	// Send success response back to React
 	response := map[string]interface{}{
-		"message": fmt.Sprintf("Success! Your %s is being prepared.", orderedPizza.Name),
-		"order":   orderedPizza,
+		"message": fmt.Sprintf("Success! Your order #%s is being prepared. Thank you %s!", order.ID, order.Customer.FirstName),
+		"order":   order,
 	}
 
 	json.NewEncoder(w).Encode(response)

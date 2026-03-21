@@ -1,11 +1,14 @@
 import React, { useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { CartContext } from '../context/CartContext';
+import { placeOrder } from '../services/api';
 import '../styles/pages.css';
 
 function Checkout() {
   const navigate = useNavigate();
   const { cart, getCartTotal, clearCart } = useContext(CartContext);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
@@ -33,7 +36,7 @@ function Checkout() {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     
     // Validate form
@@ -42,20 +45,36 @@ function Checkout() {
       return;
     }
 
-    // Create order
-    const order = {
-      id: Date.now(),
-      items: cart,
-      total: (parseFloat(getCartTotal()) * 1.1).toFixed(2),
-      customer: formData,
-      date: new Date().toLocaleString(),
-    };
+    try {
+      setLoading(true);
+      setError(null);
 
-    console.log('Order placed:', order);
+      // Create order object
+      const order = {
+        id: Date.now().toString().slice(-8),
+        items: cart,
+        total: (parseFloat(getCartTotal()) * 1.1).toFixed(2),
+        customer: formData,
+        date: new Date().toLocaleString(),
+      };
 
-    // Clear cart and navigate
-    clearCart();
-    navigate('/order-confirmation', { state: { order } });
+      // Send order to backend
+      console.log('Sending order to backend:', order);
+      const response = await placeOrder(order);
+      console.log('Backend response:', response);
+
+      // Show success message
+      alert(`Order placed successfully! ${response.message}`);
+
+      // Clear cart and navigate
+      clearCart();
+      navigate('/order-confirmation', { state: { order } });
+    } catch (err) {
+      console.error('Error placing order:', err);
+      setError('Failed to place order. Please try again.');
+    } finally {
+      setLoading(false);
+    }
   };
 
   const total = (parseFloat(getCartTotal()) * 1.1).toFixed(2);
@@ -63,6 +82,12 @@ function Checkout() {
   return (
     <div className="page checkout-page">
       <h1>Checkout</h1>
+      
+      {error && (
+        <div className="error-message">
+          ❌ {error}
+        </div>
+      )}
       
       <div className="checkout-container">
         <div className="checkout-form">
@@ -76,6 +101,7 @@ function Checkout() {
                 value={formData.firstName}
                 onChange={handleChange}
                 required
+                disabled={loading}
               />
               <input
                 type="text"
@@ -84,6 +110,7 @@ function Checkout() {
                 value={formData.lastName}
                 onChange={handleChange}
                 required
+                disabled={loading}
               />
             </div>
 
@@ -94,6 +121,7 @@ function Checkout() {
               value={formData.email}
               onChange={handleChange}
               required
+              disabled={loading}
             />
 
             <input
@@ -102,6 +130,7 @@ function Checkout() {
               placeholder="Phone Number"
               value={formData.phone}
               onChange={handleChange}
+              disabled={loading}
             />
 
             <input
@@ -111,6 +140,7 @@ function Checkout() {
               value={formData.address}
               onChange={handleChange}
               required
+              disabled={loading}
             />
 
             <div className="form-row">
@@ -120,6 +150,7 @@ function Checkout() {
                 placeholder="City"
                 value={formData.city}
                 onChange={handleChange}
+                disabled={loading}
               />
               <input
                 type="text"
@@ -127,11 +158,16 @@ function Checkout() {
                 placeholder="Zip Code"
                 value={formData.zipCode}
                 onChange={handleChange}
+                disabled={loading}
               />
             </div>
 
-            <button type="submit" className="btn btn-primary full-width">
-              Place Order
+            <button 
+              type="submit" 
+              className="btn btn-primary full-width"
+              disabled={loading}
+            >
+              {loading ? 'Placing Order...' : 'Place Order'}
             </button>
           </form>
         </div>
