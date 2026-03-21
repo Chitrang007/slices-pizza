@@ -5,9 +5,18 @@ import (
 	"net/http"
 	"slices-pizza/backend/middleware"
 	"slices-pizza/backend/routes"
+	"slices-pizza/backend/services"
 )
 
 func main() {
+	// Initialize database
+	err := services.InitDatabase()
+	if err != nil {
+		fmt.Printf("❌ Failed to initialize database: %v\n", err)
+		return
+	}
+	defer services.CloseDatabase()
+
 	// Setup all routes
 	mux := routes.SetupRoutes()
 
@@ -31,7 +40,7 @@ func main() {
 	fmt.Println()
 
 	// Start the server
-	err := http.ListenAndServe(port, handler)
+	err = http.ListenAndServe(port, handler)
 	if err != nil {
 		fmt.Printf("❌ Oven failure: %s\n", err)
 	}
