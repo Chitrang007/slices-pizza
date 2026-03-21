@@ -33,7 +33,7 @@ func InitDatabase() error {
 	}
 
 	// Build connection string
-	connStr := fmt.Sprintf("user=%s password=%s dbname=%s host=%s port=%s sslmode=disable",
+	connStr := fmt.Sprintf("user=%s password=%s dbname=%s host=%s port=%s sslmode=require",
 		dbUser, dbPassword, dbName, dbHost, dbPort)
 
 	var openErr error
