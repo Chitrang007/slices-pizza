@@ -1,0 +1,79 @@
+/* Global Button Styles */
+.btn {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  display: inline-block;
+  text-align: center;
+}
+
+.btn-primary {
+  background-color: #FF6B35;
+  color: white;
+}
+
+.btn-primary:hover {
+  background-color: #e55a2a;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(255, 107, 53, 0.3);
+}
+
+.btn-secondary {
+  background-color: #004E89;
+  color: white;
+}
+
+.btn-secondary:hover {
+  background-color: #003a63;
+  transform: translateY(-2px);
+}
+
+.btn-cancel {
+  background-color: #ccc;
+  color: #333;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn-cancel:hover {
+  background-color: #bbb;
+  transform: translateY(-2px);
+}
+
+.btn-confirm {
+  background-color: #4CAF50;
+  color: white;
+}
+
+.btn-confirm:hover:not(:disabled) {
+  background-color: #45a049;
+}
+
+.btn-confirm:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.btn-remove {
+  background: #ff4444;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn-remove:hover {
+  background: #cc0000;
+}
+
+.full-width {
+  width: 100%;
+}

@@ -1,5 +1,10 @@
-// API service for communicating with Go backend
-const API_BASE_URL = 'https://slices-pizza-backend.onrender.com/api';
+// Check if the app is running on localhost
+const isLocal = window.location.hostname === 'localhost';
+
+// Automatically switch between local and production
+const API_BASE_URL = isLocal 
+  ? 'http://localhost:8080/api' // Your Go local port
+  : 'https://slices-pizza-backend.onrender.com/api';
 
 // Fetch all pizzas from backend
 export const fetchMenu = async () => {

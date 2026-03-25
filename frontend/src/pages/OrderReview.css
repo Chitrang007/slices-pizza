@@ -1,0 +1,119 @@
+.order-review-page {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px 20px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.review-container {
+  display: flex;
+  gap: 30px;
+  align-items: flex-start;
+}
+
+/* Left Section */
+.review-main-left {
+  flex: 2;
+}
+
+.review-main-left h2 {
+  margin-bottom: 25px;
+  font-weight: 600;
+}
+
+.review-box {
+  border: 1px solid #ddd;
+  padding: 20px;
+  margin-bottom: 20px;
+  background: #fff;
+}
+
+.box-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 10px;
+  margin-bottom: 15px;
+}
+
+.edit-link {
+  background: none;
+  border: none;
+  text-decoration: underline;
+  color: #333;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+/* Right Section (Sidebar) */
+.review-sidebar-right {
+  flex: 1;
+  position: sticky;
+  top: 20px;
+}
+
+.bag-summary-card {
+  border: 1px solid #ccc;
+  padding: 20px;
+  background: #fdfdfd;
+}
+
+.small-item-row {
+  display: flex;
+  gap: 15px;
+  padding: 10px 0;
+  border-bottom: 1px solid #eee;
+}
+
+.item-icon { font-size: 24px; }
+
+.price-breakdown {
+  margin: 20px 0;
+}
+
+.price-breakdown .row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.total-final {
+  font-size: 1.25rem;
+  font-weight: bold;
+  border-top: 1px solid #ccc;
+  padding-top: 10px;
+  margin-top: 10px;
+}
+
+/* THE SIDEBAR BUTTON */
+.confirm-order-btn {
+  width: 100%;
+  background-color: #000;
+  color: #fff;
+  padding: 18px;
+  border: none;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  margin: 15px 0;
+  transition: opacity 0.2s;
+}
+
+.confirm-order-btn:hover {
+  opacity: 0.85;
+}
+
+.confirm-order-btn:disabled {
+  background-color: #999;
+}
+
+.free-text {
+  color: green;
+  font-weight: bold;
+}
+
+/* Forces ALL CAPS for the payment name */
+.uppercase-text {
+  text-transform: uppercase;
+}

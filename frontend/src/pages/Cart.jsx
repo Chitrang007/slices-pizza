@@ -1,7 +1,6 @@
 import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { CartContext } from '../context/CartContext';
-import '../styles/pages.css';
 
 function Cart() {
   const { cart, removeFromCart, getCartTotal } = useContext(CartContext);
@@ -13,7 +12,7 @@ function Cart() {
         <div className="empty-cart">
           <p>Your cart is empty</p>
           <Link to="/menu" className="btn btn-primary">
-            Continue Shopping
+            Browse Menu
           </Link>
         </div>
       </div>
@@ -36,7 +35,7 @@ function Cart() {
               )}
             </div>
             <div className="item-price">
-              ${item.customPrice || item.price.toFixed(2)}
+              ${(Number(item.customPrice) || Number(item.price) || 0).toFixed(2)}
             </div>
             <button 
               onClick={() => removeFromCart(item.cartId)}

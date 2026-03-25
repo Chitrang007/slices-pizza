@@ -32,9 +32,15 @@ func InitDatabase() error {
 		return fmt.Errorf("missing required environment variables: DB_USER, DB_PASSWORD, DB_NAME")
 	}
 
+	// Fetch the SSL mode from the environment (default to 'require' for safety)
+	dbSSLMode := os.Getenv("DB_SSLMODE")
+	if dbSSLMode == "" {
+		dbSSLMode = "require" 
+	}
+
 	// Build connection string
-	connStr := fmt.Sprintf("user=%s password=%s dbname=%s host=%s port=%s sslmode=require",
-		dbUser, dbPassword, dbName, dbHost, dbPort)
+	connStr := fmt.Sprintf("user=%s password=%s dbname=%s host=%s port=%s sslmode=%s",
+		dbUser, dbPassword, dbName, dbHost, dbPort, dbSSLMode)
 
 	var openErr error
 	DB, openErr = sql.Open("postgres", connStr)
