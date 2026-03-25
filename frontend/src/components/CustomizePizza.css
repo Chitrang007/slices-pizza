@@ -1,0 +1,115 @@
+/* Customize Pizza Modal */
+.customize-pizza-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.customize-pizza-content {
+  background: white;
+  padding: 2rem;
+  border-radius: 10px;
+  max-width: 500px;
+  width: 90%;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+}
+
+.customize-pizza-content h2 {
+  margin-bottom: 1rem;
+  color: #004E89;
+}
+
+.pizza-name {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #FF6B35;
+  margin-bottom: 1rem;
+}
+
+.toppings-label {
+  font-weight: bold;
+  margin-bottom: 1rem;
+  color: #333;
+}
+
+.toppings-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+}
+
+.topping-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem;
+  border: 2px solid #eee;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.topping-item:hover {
+  border-color: #FF6B35;
+  background-color: rgba(255, 107, 53, 0.05);
+}
+
+.topping-item input[type="checkbox"] {
+  cursor: pointer;
+  width: 20px;
+  height: 20px;
+}
+
+.topping-name {
+  flex: 1;
+  font-weight: 500;
+}
+
+.topping-price {
+  color: #FF6B35;
+  font-weight: bold;
+}
+
+.customize-footer {
+  border-top: 2px solid #eee;
+  padding-top: 1rem;
+  margin-top: 1rem;
+}
+
+.price-display {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+  padding: 0.75rem;
+  background-color: #f9f9f9;
+  border-radius: 5px;
+}
+
+.total-price {
+  font-weight: bold;
+  color: #FF6B35;
+  font-size: 1.1rem;
+}
+
+.button-group {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .customize-pizza-content {
+    width: 95%;
+  }
+}

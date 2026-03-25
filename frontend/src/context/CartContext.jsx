@@ -1,52 +1,79 @@
 import React, { createContext, useState, useEffect } from 'react';
 
-// Create the context
 export const CartContext = createContext();
 
-// Provider component
+// Initial state for the delivery form
+const initialCustomerState = {
+  firstName: '',
+  lastName: '',
+  email: '',
+  phone: '',
+  address: '',
+  city: '',
+  state: '',
+  country: '',
+  zipCode: '',
+};
+
 export function CartProvider({ children }) {
+  // 1. Cart State with localStorage persistence
   const [cart, setCart] = useState(() => {
-    // Load from localStorage on mount
     try {
       const saved = localStorage.getItem('slices-pizza-cart');
       return saved ? JSON.parse(saved) : [];
     } catch (error) {
-      console.error('Error loading cart from localStorage:', error);
+      console.error('Error loading cart:', error);
       return [];
     }
   });
 
-  // Save to localStorage whenever cart changes
+  // 2. Customer Details State (persists during the session)
+  const [customerDetails, setCustomerDetails] = useState(initialCustomerState);
+
+  // Sync cart to localStorage
   useEffect(() => {
-    try {
-      localStorage.setItem('slices-pizza-cart', JSON.stringify(cart));
-    } catch (error) {
-      console.error('Error saving cart to localStorage:', error);
-    }
+    localStorage.setItem('slices-pizza-cart', JSON.stringify(cart));
   }, [cart]);
 
-  // Add item to cart
+  // Add pizza to cart
   const addToCart = (pizza) => {
+    // We use Date.now() to give every pizza a unique ID in the cart
     setCart([...cart, { ...pizza, cartId: Date.now() }]);
   };
 
-  // Remove item from cart
+  // Remove pizza from cart
   const removeFromCart = (cartId) => {
     setCart(cart.filter(item => item.cartId !== cartId));
   };
 
-  // Clear cart
+  // Reset the entire order session
   const clearCart = () => {
     setCart([]);
+    setCustomerDetails(initialCustomerState);
   };
 
-  // Get cart total
+  // Calculate total price robustly
   const getCartTotal = () => {
-    return cart.reduce((total, item) => total + item.price, 0).toFixed(2);
+    const total = cart.reduce((sum, item) => {
+      // Use Number() to prevent string concatenation or .toFixed crashes
+      const price = Number(item.customPrice) || Number(item.price) || 0;
+      return sum + price;
+    }, 0);
+    return total.toFixed(2);
   };
 
   return (
-    <CartContext.Provider value={{ cart, addToCart, removeFromCart, clearCart, getCartTotal }}>
+    <CartContext.Provider 
+      value={{ 
+        cart, 
+        customerDetails, 
+        setCustomerDetails, 
+        addToCart, 
+        removeFromCart, 
+        clearCart, 
+        getCartTotal 
+      }}
+    >
       {children}
     </CartContext.Provider>
   );

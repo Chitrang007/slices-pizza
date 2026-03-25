@@ -1,0 +1,85 @@
+/* Order Confirmation Page */
+.confirmation-page {
+  text-align: center;
+  padding: 2rem;
+}
+
+.confirmation-content {
+  background: white;
+  padding: 3rem;
+  border-radius: 10px;
+  max-width: 600px;
+  margin: 0 auto;
+  border: 2px solid #eee;
+}
+
+.success-icon {
+  font-size: 4rem;
+  color: #4CAF50;
+  margin-bottom: 1rem;
+}
+
+.confirmation-page h1 {
+  color: #4CAF50;
+  margin-bottom: 0.5rem;
+}
+
+.confirmation-message {
+  font-size: 1.1rem;
+  color: #666;
+  margin-bottom: 2rem;
+}
+
+.order-details {
+  background: #f9f9f9;
+  padding: 1.5rem;
+  border-radius: 10px;
+  margin-bottom: 2rem;
+  text-align: left;
+}
+
+.order-number {
+  font-weight: bold;
+  color: #004E89;
+}
+
+.order-date {
+  color: #666;
+  font-size: 0.9rem;
+}
+
+.order-items h3,
+.delivery-info h3 {
+  margin-top: 1rem;
+  color: #004E89;
+}
+
+.item {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.5rem 0;
+}
+
+.order-total {
+  margin: 1rem 0;
+  padding: 1rem;
+  background: white;
+  border-left: 4px solid #FF6B35;
+  font-size: 1.1rem;
+  color: #FF6B35;
+}
+
+.estimated-delivery {
+  background: #e8f5e9;
+  padding: 1rem;
+  border-radius: 5px;
+  color: #4CAF50;
+  margin-bottom: 1rem;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .confirmation-content {
+    padding: 2rem 1.5rem;
+  }
+}

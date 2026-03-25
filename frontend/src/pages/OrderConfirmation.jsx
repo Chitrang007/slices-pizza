@@ -1,6 +1,6 @@
-import React from 'react';
-import { useLocation, Link } from 'react-router-dom';
-import '../styles/pages.css';
+import React from "react";
+import { useLocation, Link } from "react-router-dom";
+import "./OrderConfirmation.css";
 
 function OrderConfirmation() {
   const location = useLocation();
@@ -49,7 +49,9 @@ function OrderConfirmation() {
           <div className="delivery-info">
             <h3>Delivery Address:</h3>
             <p>{order.customer.address}</p>
-            <p>{order.customer.city}, {order.customer.zipCode}</p>
+            <p>
+              {order.customer.city}, {order.customer.zipCode}
+            </p>
             <p>Phone: {order.customer.phone}</p>
           </div>
 

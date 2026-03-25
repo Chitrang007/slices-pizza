@@ -8,9 +8,27 @@ import Menu from './pages/Menu';
 import Cart from './pages/Cart';
 import Checkout from './pages/Checkout';
 import OrderConfirmation from './pages/OrderConfirmation';
+
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
+// Global Styles
 import './styles/App.css';
-import './styles/components.css'
-import './styles/pages.css'
+import './styles/buttons.css';
+
+// Component Styles
+import './components/Header.css';
+import './components/Footer.css';
+import './components/CustomizePizza.css';
+
+// Page Styles
+import './pages/Home.css';
+import './pages/Menu.css';
+import './pages/Cart.css';
+import './pages/Checkout.css';
+import './pages/OrderConfirmation.css';
+import Payment from './pages/Payment';
+import OrderReview from './pages/OrderReview';
 
 function App() {
   return (
@@ -24,12 +42,15 @@ function App() {
               <Route path="/menu" element={<Menu />} />
               <Route path="/cart" element={<Cart />} />
               <Route path="/checkout" element={<Checkout />} />
+              <Route path="/payment" element={<Payment />} />
+              <Route path="/order-review" element={<OrderReview />} />
               <Route path="/order-confirmation" element={<OrderConfirmation />} />
             </Routes>
           </main>
           <Footer />
         </div>
       </Router>
+      <ToastContainer position="bottom-right" autoClose={3000} />
     </CartProvider>
   );
 }

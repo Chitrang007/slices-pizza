@@ -12,13 +12,15 @@ type Pizza struct {
 
 // Customer represents order customer information
 type Customer struct {
-	FirstName string `json:"firstName"`
-	LastName  string `json:"lastName"`
-	Email     string `json:"email"`
-	Phone     string `json:"phone"`
-	Address   string `json:"address"`
-	City      string `json:"city"`
-	ZipCode   string `json:"zipCode"`
+    FirstName string `json:"firstName"`
+    LastName  string `json:"lastName"`
+    Email     string `json:"email"`
+    Phone     string `json:"phone"`
+    Address   string `json:"address"`
+    City      string `json:"city"`
+    State     string `json:"state"`
+    ZipCode   string `json:"zipCode"`
+    Country   string `json:"country"`
 }
 
 // Order represents a complete pizza order
