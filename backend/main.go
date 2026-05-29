@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"net/http"
+	"os"
 	"slices-pizza/backend/middleware"
 	"slices-pizza/backend/routes"
 	"slices-pizza/backend/services"
@@ -24,7 +25,10 @@ func main() {
 	handler := middleware.CORSMiddleware(mux)
 
 	// Configuration
-	port := ":8080"
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "8080"
+	}
 
 	// Welcome message
 	fmt.Println("🍕 ═══════════════════════════════════════")
