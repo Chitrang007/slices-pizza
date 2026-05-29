@@ -27,7 +27,7 @@ func main() {
 	// Configuration
 	port := os.Getenv("PORT")
 	if port == "" {
-		port = "8080"
+		port = ":8080"
 	}
 
 	// Welcome message
@@ -44,7 +44,7 @@ func main() {
 	fmt.Println()
 
 	// Start the server
-	err = http.ListenAndServe(port, handler)
+	err = http.ListenAndServe(":"+port, handler)
 	if err != nil {
 		fmt.Printf("❌ Oven failure: %s\n", err)
 	}
