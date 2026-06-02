@@ -10,7 +10,7 @@ import (
 )
 
 func main() {
-	// Initialize database
+	// Initialize database (connects to MongoDB natively!)
 	err := services.InitDatabase()
 	if err != nil {
 		fmt.Printf("❌ Failed to initialize database: %v\n", err)
@@ -27,7 +27,7 @@ func main() {
 	// Configuration
 	port := os.Getenv("PORT")
 	if port == "" {
-		port = ":8080"
+		port = "8080"
 	}
 
 	// Welcome message
@@ -40,7 +40,7 @@ func main() {
 	fmt.Println("   🔗 POST http://localhost:8080/api/order")
 	fmt.Println("   🔗 GET  http://localhost:8080/api/health")
 	fmt.Println()
-	fmt.Printf("🚀 Server listening on %s...\n", port)
+	fmt.Printf("🚀 Server listening on port %s...\n", port)
 	fmt.Println()
 
 	// Start the server

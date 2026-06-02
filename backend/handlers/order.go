@@ -61,30 +61,19 @@ func CreateOrder(w http.ResponseWriter, r *http.Request) {
 	fmt.Printf("📅 Order Date: %s\n", order.Date)
 
 	// Save order to database
-	itemsJSON, _ := json.Marshal(order.Items)
-	dbID, err := services.SaveOrder(
-		order.ID,
-		order.Customer.FirstName,
-		order.Customer.LastName,
-		order.Customer.Email,
-		order.Customer.Phone,
-		order.Customer.Address,
-		order.Customer.City,
-		order.Customer.ZipCode,
-		string(itemsJSON),
-		order.Total,
-		order.Date,
-	)
+	dbID, err := services.SaveOrder(order)
 
 	if err != nil {
 		fmt.Printf("❌ Error saving order to database: %v\n", err)
-		fmt.Println("🔥 ═══════════════════════════════════════════\n")
+		fmt.Println("🔥 ═══════════════════════════════════════════")
+		fmt.Println()
 		http.Error(w, "Failed to save order", http.StatusInternalServerError)
 		return
 	}
 
-	fmt.Printf("💾 Saved to database with ID: %d\n", dbID)
-	fmt.Println("🔥 ═══════════════════════════════════════════\n")
+	// Note: Changed %d to %s because MongoDB IDs and your custom SLPZ IDs are strings
+	fmt.Printf("💾 Saved to database with ID: %s\n", dbID)
+	fmt.Println("🔥 ═══════════════════════════════════════════")
 
 	// Set response header
 	w.Header().Set("Content-Type", "application/json")

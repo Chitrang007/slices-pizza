@@ -14,6 +14,7 @@ func SetupRoutes() *http.ServeMux {
 	// Register routes
 	mux.HandleFunc("/api/menu", handlers.GetMenu)
 	mux.HandleFunc("/api/order", handlers.CreateOrder)
+	mux.HandleFunc("/api/toppings", handlers.GetToppings)
 	mux.HandleFunc("/api/health", HealthCheck)
 
 	return mux
