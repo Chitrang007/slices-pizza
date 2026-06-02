@@ -78,10 +78,23 @@ function CustomizePizza({ pizza, onConfirm, onCancel }) {
                       selectedToppings.length >= 10
                     }
                   />
-                  <span className="topping-name">{topping.name}</span>
-                  <span className="topping-price">
-                    +${topping.price.toFixed(2)}
-                  </span>
+
+                  {topping.image ? (
+                    <img
+                      src={topping.image}
+                      alt={topping.name}
+                      className="topping-thumbnail"
+                    />
+                  ) : (
+                    <span className="topping-emoji">🧂</span>
+                  )}
+
+                  <div className="topping-info">
+                    <span className="topping-name">{topping.name}</span>
+                    <span className="topping-price">
+                      +${topping.price.toFixed(2)}
+                    </span>
+                  </div>
                 </label>
               ))}
             </div>
