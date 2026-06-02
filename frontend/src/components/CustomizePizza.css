@@ -51,12 +51,13 @@
 .topping-item {
   display: flex;
   align-items: center;
-  gap: 0.75rem;
+  gap: 10px; /* Adjusted gap for new elements */
   padding: 0.75rem;
   border: 2px solid #eee;
   border-radius: 5px;
   cursor: pointer;
   transition: all 0.3s ease;
+  margin-bottom: 10px; /* Added margin for spacing */
 }
 
 .topping-item:hover {
@@ -70,14 +71,33 @@
   height: 20px;
 }
 
+/* New Image Styling */
+.topping-thumbnail {
+  width: 40px;
+  height: 40px;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+.topping-emoji {
+  font-size: 24px;
+}
+
+/* Wrapper for text to align properly */
+.topping-info {
+  display: flex;
+  flex-direction: column;
+  flex: 1; /* Pushes the price to the right if needed, or fills space */
+}
+
 .topping-name {
-  flex: 1;
-  font-weight: 500;
+  font-weight: bold; /* Bolded the name for better visibility */
 }
 
 .topping-price {
-  color: #FF6B35;
-  font-weight: bold;
+  color: #888; /* Dimmed the price slightly */
+  font-size: 0.9em;
+  font-weight: normal; /* Removed bold to contrast with name */
 }
 
 .customize-footer {

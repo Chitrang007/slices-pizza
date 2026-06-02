@@ -23,14 +23,11 @@ function Menu() {
         if (menuData && menuData.length > 0) {
           setPizzas(menuData);
         } else {
-          console.log("No data from backend, using mock data");
           setPizzas(mockPizzas);
         }
       } catch (err) {
-        console.error("Failed to fetch menu:", err);
         setPizzas(mockPizzas);
         setError("Could not connect to backend. Using mock data.");
-
         toast.error("🍕 Connection lost! Showing our classic menu instead.", {
           theme: "colored",
           toastId: "fetch-error",
@@ -49,13 +46,11 @@ function Menu() {
 
   const handleAddToCart = (customizedPizza) => {
     addToCart(customizedPizza);
-
     toast.success(`🍕 ${customizedPizza.name || "Pizza"} added to cart!`, {
       position: "bottom-right",
       autoClose: 2000,
       theme: "colored",
     });
-
     setSelectedPizza(null);
   };
 
@@ -86,7 +81,17 @@ function Menu() {
       <div className="pizza-grid">
         {pizzas.map((pizza) => (
           <div key={pizza.id} className="pizza-card">
-            <div className="pizza-image">{pizza.image || "🍕"}</div>
+            <div className="pizza-image">
+              {pizza.image && pizza.image.startsWith("http") ? (
+                <img 
+                  src={pizza.image} 
+                  alt={pizza.name} 
+                  style={{ width: "100%", height: "200px", objectFit: "cover", borderRadius: "8px" }} 
+                />
+              ) : (
+                pizza.image || "🍕"
+              )}
+            </div>
             <h3>{pizza.name}</h3>
             <p>{pizza.description}</p>
             <div className="pizza-footer">
